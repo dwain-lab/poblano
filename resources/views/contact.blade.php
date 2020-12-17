@@ -22,7 +22,7 @@
             <div class="address">
                 <i class="icofont-google-map"></i>
                 <h4>Location:</h4>
-                <p>A108 Adam Street, New York, NY 535022</p>
+                <p>69 1/4 George Price Highway, San Ignacio, Cayo, Belize</p>
             </div>
 
             <div class="open-hours">
@@ -30,20 +30,20 @@
                 <h4>Open Hours:</h4>
                 <p>
                 Monday-Saturday:<br>
-                11:00 AM - 2300 PM
+                8:00 AM - 2100 PM
                 </p>
             </div>
 
             <div class="email">
                 <i class="icofont-envelope"></i>
                 <h4>Email:</h4>
-                <p>info@example.com</p>
+                <p>info@poblano.net</p>
             </div>
 
             <div class="phone">
                 <i class="icofont-phone"></i>
                 <h4>Call:</h4>
-                <p>+1 5589 55488 55s</p>
+                <p>+501 6152236</p>
             </div>
 
             </div>

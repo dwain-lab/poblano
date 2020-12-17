@@ -1,12 +1,3 @@
 @extends('layouts.app')
 
-
-
-    <main id="main">
-
-
-
-
-
-
-
+@section('title', 'Welcome to Poblano')

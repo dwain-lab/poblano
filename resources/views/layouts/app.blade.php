@@ -13,13 +13,13 @@
 
 @include('why-us')
 
-@include('menu-section')
+@include('menu')
 
-@include('special-section')
+@include('special')
 
-@include('event-section')
+@include('event')
 
-@include('book-table')
+@include('booking-form')
 
 @include('testimonials')
 

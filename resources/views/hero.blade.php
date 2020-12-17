@@ -3,7 +3,7 @@
 <div class="container position-relative text-center text-lg-left" data-aos="zoom-in" data-aos-delay="100">
     <div class="row">
     <div class="col-lg-8">
-        <h1>Welcome to <span>Restaurantly</span></h1>
+        <h1>Welcome to <span>Poblano</span></h1>
         <h2>Delivering great food for more than 18 years!</h2>
 
         <div class="btns">
