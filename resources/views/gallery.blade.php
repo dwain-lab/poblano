@@ -12,15 +12,19 @@
 
     <div class="row no-gutters">
 
+    @foreach ($galleries as $gallery)
+
     <div class="col-lg-3 col-md-4">
         <div class="gallery-item">
-        <a href="assets/img/gallery/gallery-1.jpg" class="venobox" data-gall="gallery-item">
-            <img src="assets/img/gallery/gallery-1.jpg" alt="" class="img-fluid">
+        <a href="{{ $gallery->getFirstMediaUrl('gallery-collection', 'gallery') }}" class="venobox" data-gall="gallery-item">
+            <img src="{{ $gallery->getFirstMediaUrl('gallery-collection', 'gallery') }}" alt="" class="img-fluid">
         </a>
         </div>
     </div>
 
-    <div class="col-lg-3 col-md-4">
+    @endforeach
+
+    {{-- <div class="col-lg-3 col-md-4">
         <div class="gallery-item">
         <a href="assets/img/gallery/gallery-2.jpg" class="venobox" data-gall="gallery-item">
             <img src="assets/img/gallery/gallery-2.jpg" alt="" class="img-fluid">
@@ -74,7 +78,7 @@
             <img src="assets/img/gallery/gallery-8.jpg" alt="" class="img-fluid">
         </a>
         </div>
-    </div>
+    </div> --}}
 
     </div>
 
