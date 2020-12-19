@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\About;
+use App\Models\Event;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 
@@ -32,8 +33,9 @@ class HomeController extends Controller
     {
         $galleries = Gallery::all();
         $abouts = About::all();
+        $events = Event::all();
 
-        return view('index', compact('galleries', 'abouts'));
+        return view('index', compact('galleries', 'abouts', 'events'));
 
     }
 }

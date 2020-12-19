@@ -11,6 +11,29 @@
 
     <div class="row event-item">
         <div class="col-lg-6">
+            <img src="{{ $event->getFirstMediaUrl('event-collection', 'gallery') }}" class="img-fluid" alt="">
+        </div>
+        <div class="col-lg-6 pt-4 pt-lg-0 content">
+            <h3>{{ $event->heading }}</h3>
+        <div class="price">
+            <p><span>${{ $event->cost }}</span></p>
+        </div>
+        <p class="font-italic">
+            {{ $event->intro }}
+        </p>
+        <ul>
+            <li><i class="icofont-check-circled"></i> {{ $event->point1 }} </li>
+            <li><i class="icofont-check-circled"></i> {{ $event->point2 }}</li>
+            <li><i class="icofont-check-circled"></i> {{ $event->point3 }} </li>
+        </ul>
+        <p>
+            {{ $event->end }}
+        </p>
+        </div>
+    </div>
+
+    {{-- <div class="row event-item">
+        <div class="col-lg-6">
         <img src="assets/img/event-birthday.jpg" class="img-fluid" alt="">
         </div>
         <div class="col-lg-6 pt-4 pt-lg-0 content">
@@ -82,7 +105,7 @@
             velit esse cillum dolore eu fugiat nulla pariatur
         </p>
         </div>
-    </div>
+    </div> --}}
 
     </div>
 

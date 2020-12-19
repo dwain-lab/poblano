@@ -57,7 +57,19 @@ Route::post('/admin/about/trash-restore/{about}', 'App\Http\Controllers\AboutCon
 
 Route::post('/admin/about/trash-destroy/{about}', 'App\Http\Controllers\AboutController@trashDestroy')->name('about.trashDestroy');
 
+/*
+|--------------------------------------------------------------------------
+| Event Routes
+|--------------------------------------------------------------------------
+*/
 
+Route::resource('/admin/event', 'App\Http\Controllers\EventController')->except('show');
+
+Route::get('/admin/event/trash-view', 'App\Http\Controllers\EventController@trashIndex')->name('event.trashIndex');
+
+Route::post('/admin/event/trash-restore/{event}', 'App\Http\Controllers\EventController@trashRestore')->name('event.trashRestore');
+
+Route::post('/admin/event/trash-destroy/{event}', 'App\Http\Controllers\EventController@trashDestroy')->name('event.trashDestroy');
 
 
 

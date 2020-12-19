@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
+use function GuzzleHttp\Promise\all;
+
 class EventController extends Controller
 {
     /**
@@ -14,7 +16,11 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        session()->forget('search');
+        $events = Event::all();
+
+        $events = Event::sortable()->latest('updated_at')->paginate(3);
+        return view('admin.event.index', compact('events'));
     }
 
     /**
@@ -24,7 +30,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.event.create');
     }
 
     /**
@@ -35,7 +41,25 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'heading'        =>      ['required'],
+            'cost'           =>      ['required','numeric'],
+            'intro'          =>      ['required'],
+            'point1'         =>      ['required'],
+            'point2'         =>      ['required'],
+            'point3'         =>      ['required'],
+            'end'            =>      ['required'],
+            'file'           =>      ['required','mimes:jpg','max:2048'],
+        ]);
+
+        $event = Event::create($request->all());
+
+        if($event) {
+            $event->addMedia($request->file('file'))
+            ->toMediaCollection('event-collection');
+        }
+       return redirect()->route('event.index')
+            ->with('success', 'Event post created successfully.');
     }
 
     /**
@@ -57,7 +81,7 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        return view('admin.event.edit', compact('event'));
     }
 
     /**
@@ -69,7 +93,33 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        //
+            $request->validate([
+                'heading'        =>      ['required'],
+                'cost'           =>      ['required','numeric'],
+                'intro'          =>      ['required'],
+                'point1'         =>      ['required'],
+                'point2'         =>      ['required'],
+                'point3'         =>      ['nullable'],
+                'end'            =>      ['required'],
+                'file'           =>      ['mimes:jpg','max:2048', 'nullable'],
+            ]);
+
+        if(null == ($request->file)) {
+            $event->update($request->all());
+        }
+        else
+        {
+            $event->clearMediaCollection('event-collection');
+            $event->addMedia($request->file('file'))
+                ->toMediaCollection('event-collection');
+            $event->update($request->all());
+            // $event->name = $request->name;
+            $event->updated_at = now();
+            $event->save();
+        }
+
+        return redirect()->route('event.index')
+            ->with('success', 'Updated successfully');
     }
 
     /**
