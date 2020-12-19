@@ -25,10 +25,6 @@
   <link href={{ asset('assets/vendor/venobox/venobox.css') }} rel="stylesheet">
   <link href={{ asset('assets/vendor/aos/aos.css') }} rel="stylesheet">
 
-
-  {{-- Scripts --}}
-  <script src="https://kit.fontawesome.com/06505ab25b.js" crossorigin="anonymous"></script>
-
   <!-- Template Main CSS File -->
   <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
 

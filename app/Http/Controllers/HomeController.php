@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\About;
 use App\Models\Gallery;
 use Illuminate\Http\Request;
 
@@ -30,8 +31,9 @@ class HomeController extends Controller
     public function mainIndex()
     {
         $galleries = Gallery::all();
+        $abouts = About::all();
 
-        return view('index', compact('galleries'));
+        return view('index', compact('galleries', 'abouts'));
 
     }
 }

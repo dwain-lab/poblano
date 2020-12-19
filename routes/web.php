@@ -27,6 +27,13 @@ Route::get('/', 'App\Http\Controllers\HomeController@mainIndex')->name('home');
 //     return view('admin.gallery.index');
 // });
 
+
+/*
+|--------------------------------------------------------------------------
+| Gallery Routes
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/admin/gallery/trash-view', 'App\Http\Controllers\GalleryController@trashIndex')->name('gallery.trashIndex');
 
 Route::post('/admin/gallery/trash-restore/{gallery}', 'App\Http\Controllers\GalleryController@trashRestore')->name('gallery.trashRestore');
@@ -36,7 +43,19 @@ Route::post('/admin/gallery/trash-destroy/{gallery}', 'App\Http\Controllers\Gall
 Route::resource('/admin/gallery', 'App\Http\Controllers\GalleryController')->except('show');
 
 
+/*
+|--------------------------------------------------------------------------
+| About Routes
+|--------------------------------------------------------------------------
+*/
 
+Route::resource('/admin/about', 'App\Http\Controllers\AboutController')->except('show');
+
+Route::get('/admin/about/trash-view', 'App\Http\Controllers\AboutController@trashIndex')->name('about.trashIndex');
+
+Route::post('/admin/about/trash-restore/{about}', 'App\Http\Controllers\AboutController@trashRestore')->name('about.trashRestore');
+
+Route::post('/admin/about/trash-destroy/{about}', 'App\Http\Controllers\AboutController@trashDestroy')->name('about.trashDestroy');
 
 
 

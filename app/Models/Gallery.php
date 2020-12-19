@@ -23,6 +23,11 @@ class Gallery extends Model implements HasMedia
         'name',
     ];
 
+    public $sortable = [
+        'name',
+        'updated_at'
+    ];
+
     /**
      * The attributes that should be hidden for arrays.
      *
