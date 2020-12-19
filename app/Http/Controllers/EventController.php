@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 use function GuzzleHttp\Promise\all;
 
@@ -130,6 +131,44 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        $event->delete();
+
+        return redirect()->route('event.index')
+        ->with('success', $event->number.' deleted successfully');
+    }
+
+    public function trashIndex()
+    {
+        session()->forget('search');
+       $events = Event::sortable()->onlyTrashed()->latest('updated_at')->paginate(5);
+        return view('admin.event.trash-view', compact('events'));
+    }
+
+    public function trashRestore($id)
+    {
+        $event = Event::onlyTrashed()->where('id', $id);
+        $event->restore();
+
+        return redirect()->route('event.index')
+            ->with('success', 'restored successfully');
+    }
+
+    public function trashDestroy($id)
+    {
+        $event = Event::onlyTrashed()
+        ->where('id', $id);
+
+        $event->restore();
+
+        $event = Event::findOrFail($id);
+
+        if($event)
+        {
+            $event->forceDelete();
+            return redirect()->route('event.index')
+            ->with('success', 'File permanently deleted');
+        }
+
+        return Redirect::back()->with('errors', 'Error something went wrong.  Please try again.');
     }
 }

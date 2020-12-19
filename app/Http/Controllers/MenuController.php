@@ -14,7 +14,11 @@ class MenuController extends Controller
      */
     public function index()
     {
-        //
+        session()->forget('search');
+        $menus = Menu::all();
+
+        $menus = Menu::sortable()->latest('updated_at')->paginate(3);
+        return view('admin.menu.index', compact('menus'));
     }
 
     /**
@@ -24,7 +28,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.menu.create');
     }
 
     /**
@@ -35,7 +39,23 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'dish'        =>      ['required'],
+            'cost'        =>      ['required','numeric'],
+            'ingredients' =>      ['required'],
+            'category'    =>      ['required'],
+            'file'        =>      ['required','mimes:png','max:1024'],
+        ]);
+
+        $menu = Menu::create($request->all());
+
+
+        if($menu) {
+            $menu->addMedia($request->file('file'))
+            ->toMediaCollection('menus-collection');
+        }
+       return redirect()->route('menu.index')
+            ->with('success', 'Menu post created successfully.');
     }
 
     /**

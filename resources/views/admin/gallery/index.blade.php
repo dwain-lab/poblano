@@ -5,7 +5,7 @@
 
     @section('content')
 
-        @if ($search = Session::get('search'))
+        {{-- @if ($search = Session::get('search'))
         <div class="alert alert-success">
             <p>{{ $search }} records returned successfully</p>
         </div>
@@ -33,7 +33,7 @@
                     @endforeach
                 </ul>
             </div>
-        @endif
+        @endif --}}
 
         <div class="container position-relative text-lg-left aos-init aos-animate">
 

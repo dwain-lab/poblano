@@ -60,7 +60,7 @@ class Event extends Model implements HasMedia
 
     public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('events-collection');
+        $this->addMediaCollection('event-collection');
     }
 
     public function registerMediaConversions(Media $media = null): void

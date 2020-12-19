@@ -73,9 +73,29 @@ Route::post('/admin/event/trash-destroy/{event}', 'App\Http\Controllers\EventCon
 
 
 
+/*
+|--------------------------------------------------------------------------
+| Contact Routes
+|--------------------------------------------------------------------------
+*/
 
+// Route::get('/email', 'App\Http\Controllers\ContactController@mail');
 
+Route::post('/contact-us', 'App\Http\Controllers\ContactController@contactUsStore')->name('contactUs.store');
 
+/*
+|--------------------------------------------------------------------------
+| Menu Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::resource('/admin/menu', 'App\Http\Controllers\MenuController')->except('show');
+
+Route::get('/admin/menu/trash-view', 'App\Http\Controllers\MenuController@trashIndex')->name('menu.trashIndex');
+
+Route::post('/admin/menu/trash-restore/{menu}', 'App\Http\Controllers\MenuController@trashRestore')->name('menu.trashRestore');
+
+Route::post('/admin/menu/trash-destroy/{menu}', 'App\Http\Controllers\MenuController@trashDestroy')->name('menu.trashDestroy');
 
 
 
