@@ -1,7 +1,23 @@
     <!-- ======= Header ======= -->
     <header id="header" class="fixed-top">
+        <div class="container" style="margin: inherit;clear: both;position: absolute;padding-top: 5px; display:flex">
+            @if(Breadcrumbs::has())
+            @foreach (Breadcrumbs::current() as $crumbs)
+                @if ($crumbs->url() && !$loop->last)
+                    <li class="breadcrumb-item">
+                        <a href="{{ $crumbs->url() }}">
+                            {{ $crumbs->title() }}
+                        </a>
+                    </li>
+                @else
+                    <li class="breadcrumb-item active">
+                        {{ $crumbs->title() }}
+                    </li>
+                @endif
+            @endforeach
+        @endif
+                </div>
         <div class="container d-flex align-items-center">
-
           <h1 class="logo mr-auto"><a href="index.html">Administrator Area</a></h1>
           <!-- Uncomment below if you prefer to use an image logo -->
           <!-- <a href="index.html" class="logo mr-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->

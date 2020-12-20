@@ -5,6 +5,7 @@
 
     @section('content')
 
+
         @if ($search = Session::get('search'))
         <div class="alert alert-success">
             <p>{{ $search }} records returned successfully</p>

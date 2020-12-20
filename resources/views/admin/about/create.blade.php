@@ -73,12 +73,12 @@
             </div>
         {!! Form::close() !!}
     </div>
-
+{{--
     <script src="https://cdn.tiny.cloud/1/4hzpk0nf0c7okc8slescpg6wcqkxjo7mb3fl5u5nd3i81cx8/tinymce/5/tinymce.min.js"></script>
     <script>
         tinymce.init({
             selector:'textarea.tinyeditor',
             browser_spellcheck: true,
         });
-    </script>
+    </script> --}}
 @endsection
