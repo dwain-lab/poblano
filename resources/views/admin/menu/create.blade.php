@@ -61,7 +61,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
                         <strong>{!! Form::label('category', '*Category') !!}</strong>
-                        {!! Form::text('category', null, ['placeholder'=>'Enter an Ingredients', 'class'=>'form-control', 'spellcheck'=>'true'], 'required') !!}
+                        {!! Form::select('menu_category_id', $categories, null, ['placeholder' => 'Pick a Category...', 'class'=>'form-control', 'required']) !!}
                         @error('category')
                             <div class="alert alert-danger mt-1 mb-1">{{ $message }}</div>
                         @enderror

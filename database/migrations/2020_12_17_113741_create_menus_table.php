@@ -16,8 +16,9 @@ class CreateMenusTable extends Migration
         Schema::create('menus', function (Blueprint $table) {
             $table->id();
             $table->text('dish');
-            $table->decimal('cost',3,2);
+            $table->decimal('cost',5,2);
             $table->text('ingredients');
+            $table->foreignId('menu_category_id')->index()->constrained();
             $table->softDeletes();
             $table->timestamps();
         });

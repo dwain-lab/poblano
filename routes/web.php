@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Models\Gallery;
+use App\Models\Menu;
+use App\Models\MenuCategory;
 use Carbon\Carbon;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -120,6 +122,10 @@ Route::post('/admin/menu/trash-destroy/{menu}', 'App\Http\Controllers\MenuContro
 
 
 
+
+
+
+
 // Route::get('/media', function() {
 
 
@@ -162,6 +168,23 @@ Route::post('/admin/menu/trash-destroy/{menu}', 'App\Http\Controllers\MenuContro
 // Route::get('/delete-media', function() {
 //     $mediaItems = Gallery::findOrFail(8);
 //     $mediaItems->clearMediaCollection('gallery-collection');
+// });
+
+// Route::get('/rela', function () {
+
+//     // $menu = Menu::find(3);
+
+//     // // dd($menu);
+
+//     // return $menu->menu_category;
+
+//     // dd($menu);
+
+//     $categories = MenuCategory::find(2);
+
+//      dd($categories->menus);
+
+
 // });
 
 

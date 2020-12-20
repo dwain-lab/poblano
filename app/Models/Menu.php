@@ -14,55 +14,62 @@ class Menu extends Model implements HasMedia
 {
     use HasFactory, SoftDeletes, Sortable, InteractsWithMedia;
 
+        /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'dish',
+        'cost',
+        'ingredients',
+        'menu_category_id',
+    ];
+
+    public $sortable = [
+        'dish',
+        'cost',
+    ];
+
     /**
- * The attributes that are mass assignable.
- *
- * @var array
- */
-protected $fillable = [
-    'dish',
-    'cost',
-    'ingredients',
-    'category',
-];
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        //
+    ];
 
-public $sortable = [
-    'dish',
-    'cost',
-];
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        //
+    ];
 
-/**
- * The attributes that should be hidden for arrays.
- *
- * @var array
- */
-protected $hidden = [
-    //
-];
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('menus-collection');
+    }
 
-/**
- * The attributes that should be cast to native types.
- *
- * @var array
- */
-protected $casts = [
-    //
-];
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumb')
+            ->width(300)
+            ->height(180);
 
-public function registerMediaCollections(): void
-{
-    $this->addMediaCollection('menus-collection');
-}
+        $this->addMediaConversion('gallery')
+            ->width(800)
+            ->height(822);
 
-public function registerMediaConversions(Media $media = null): void
-{
-    $this->addMediaConversion('thumb')
-        ->width(300)
-        ->height(180);
+    }
 
-    $this->addMediaConversion('gallery')
-        ->width(800)
-        ->height(822);
+    public function menu_category()
+    {
+        return $this->belongsTo('App\Models\MenuCategory');
+    }
 
-}
+
 }

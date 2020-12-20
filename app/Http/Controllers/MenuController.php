@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Menu;
+use App\Models\MenuCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class MenuController extends Controller
 {
@@ -17,7 +19,7 @@ class MenuController extends Controller
         session()->forget('search');
         $menus = Menu::all();
 
-        $menus = Menu::sortable()->latest('updated_at')->paginate(3);
+        $menus = Menu::sortable()->latest('updated_at')->paginate(5);
         return view('admin.menu.index', compact('menus'));
     }
 
@@ -28,7 +30,10 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('admin.menu.create');
+
+        $categories = MenuCategory::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->pluck('name', 'id');
+
+        return view('admin.menu.create', compact('categories'));
     }
 
     /**
@@ -43,9 +48,11 @@ class MenuController extends Controller
             'dish'        =>      ['required'],
             'cost'        =>      ['required','numeric'],
             'ingredients' =>      ['required'],
-            'category'    =>      ['required'],
+            'menu_category_id'    =>      ['required'],
             'file'        =>      ['required','mimes:png','max:1024'],
         ]);
+
+        // dd($request->menu_category_id);
 
         $menu = Menu::create($request->all());
 
@@ -77,7 +84,9 @@ class MenuController extends Controller
      */
     public function edit(Menu $menu)
     {
-        //
+        $categories = MenuCategory::all()->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE)->pluck('name', 'id');
+
+        return view('admin.menu.edit', compact('menu', 'categories'));
     }
 
     /**
@@ -89,7 +98,29 @@ class MenuController extends Controller
      */
     public function update(Request $request, Menu $menu)
     {
-        //
+        $request->validate([
+            'dish'        =>      ['required'],
+            'cost'        =>      ['required','numeric'],
+            'ingredients' =>      ['required'],
+            'menu_category_id'    =>      ['required'],
+            'file'        =>      ['mimes:png','max:1024'],
+        ]);
+
+    if(null == ($request->file)) {
+        $menu->update($request->all());
+    }
+    else
+    {
+        $menu->clearMediaCollection('menus-collection');
+        $menu->addMedia($request->file('file'))
+            ->toMediaCollection('menus-collection');
+        $menu->update($request->all());
+        $menu->updated_at = now();
+        $menu->save();
+    }
+
+    return redirect()->route('menu.index')
+        ->with('success', 'Updated successfully');
     }
 
     /**
@@ -100,6 +131,44 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        //
+        $menu->delete();
+
+        return redirect()->route('menu.index')
+        ->with('success', $menu->number.' deleted successfully');
+    }
+
+    public function trashIndex()
+    {
+        session()->forget('search');
+       $menus = Menu::sortable()->onlyTrashed()->latest('updated_at')->paginate(5);
+        return view('admin.menu.trash-view', compact('menus'));
+    }
+
+    public function trashRestore($id)
+    {
+        $menu = Menu::onlyTrashed()->where('id', $id);
+        $menu->restore();
+
+        return redirect()->route('menu.index')
+            ->with('success', 'restored successfully');
+    }
+
+    public function trashDestroy($id)
+    {
+        $menu = Menu::onlyTrashed()
+        ->where('id', $id);
+
+        $menu->restore();
+
+        $menu = Menu::findOrFail($id);
+
+        if($menu)
+        {
+            $menu->forceDelete();
+            return redirect()->route('menu.index')
+            ->with('success', 'File permanently deleted');
+        }
+
+        return Redirect::back()->with('errors', 'Error something went wrong.  Please try again.');
     }
 }
