@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Why;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class WhyController extends Controller
 {
@@ -14,7 +15,12 @@ class WhyController extends Controller
      */
     public function index()
     {
-        //
+        session()->forget('search');
+
+        $whys = Why::all();
+
+        $whys = Why::sortable()->latest('updated_at')->paginate(5);
+        return view('admin.why.index', compact('whys'));
     }
 
     /**
@@ -24,7 +30,7 @@ class WhyController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.why.create');
     }
 
     /**
@@ -35,7 +41,15 @@ class WhyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'content'           =>      ['required'],
+            'heading'        =>      ['required'],
+        ]);
+
+        $why = Why::create($request->all());
+
+       return redirect()->route('why.index')
+            ->with('success', 'Why post created successfully.');
     }
 
     /**
@@ -57,7 +71,7 @@ class WhyController extends Controller
      */
     public function edit(Why $why)
     {
-        //
+        return view('admin.why.edit', compact('why'));
     }
 
     /**
@@ -69,7 +83,15 @@ class WhyController extends Controller
      */
     public function update(Request $request, Why $why)
     {
-        //
+        $request->validate([
+            'content'           =>      ['required'],
+            'heading'        =>      ['required'],
+        ]);
+
+        $why->update($request->all());
+
+        return redirect()->route('why.index')
+            ->with('success', $why->heading.' Updated successfully');
     }
 
     /**
@@ -80,6 +102,34 @@ class WhyController extends Controller
      */
     public function destroy(Why $why)
     {
-        //
+        $why->delete();
+
+        return redirect()->route('why.index')
+            ->with('success', $why->heading.' deleted successfully');
+    }
+
+    public function trashIndex()
+    {
+        session()->forget('search');
+       $whys = Why::sortable()->onlyTrashed()->latest('updated_at')->paginate(5);
+        return view('admin.why.trash-view', compact('whys'));
+    }
+
+    public function trashRestore($id)
+    {
+        $why = Why::onlyTrashed()->where('id', $id);
+        $why->restore();
+
+        return redirect()->route('why.index')
+            ->with('success', 'Restored successfully');
+    }
+
+    public function trashDestroy($id)
+    {
+        $why = Why::onlyTrashed()->where('id', $id);
+        $why->forceDelete();
+
+        return redirect()->route('why.index')
+            ->with('success', 'Why post permanently deleted');
     }
 }

@@ -20,7 +20,7 @@ class EventController extends Controller
         session()->forget('search');
         $events = Event::all();
 
-        $events = Event::sortable()->latest('updated_at')->paginate(3);
+        $events = Event::sortable()->latest('updated_at')->paginate(5);
         return view('admin.event.index', compact('events'));
     }
 

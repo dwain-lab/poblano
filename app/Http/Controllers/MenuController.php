@@ -49,7 +49,7 @@ class MenuController extends Controller
             'cost'        =>      ['required','numeric'],
             'ingredients' =>      ['required'],
             'menu_category_id'    =>      ['required'],
-            'file'        =>      ['required','mimes:png','max:1024'],
+            'file'        =>      ['required','mimes:jpg','max:1024'],
         ]);
 
         // dd($request->menu_category_id);
@@ -103,7 +103,7 @@ class MenuController extends Controller
             'cost'        =>      ['required','numeric'],
             'ingredients' =>      ['required'],
             'menu_category_id'    =>      ['required'],
-            'file'        =>      ['mimes:png','max:1024'],
+            'file'        =>      ['mimes:jpg','max:1024'],
         ]);
 
     if(null == ($request->file)) {

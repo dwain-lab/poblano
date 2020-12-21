@@ -19,10 +19,10 @@ class ContactController extends Controller
 
     public function contactUsStore(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email',
-            'message' => 'required'
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email'],
+            'message' => ['required'],
         ]);
 
 
@@ -35,8 +35,7 @@ class ContactController extends Controller
 
         Contact::create($request->all());
 
-        return 'Thanks for contacting us! Someone will contact you as soon as possible!';
-        // return back()->with('success', 'Thanks for contacting us! We will be contacting you as soon as possible!');
+        return 'Thank you '.$name.' for contacting Poblano! Your request has been received and someone will contact you as soon as possible!';
     }
 }
 

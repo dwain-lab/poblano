@@ -15,7 +15,8 @@ class CreateMenuCategoriesTable extends Migration
     {
         Schema::create('menu_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 120);
+            $table->string('name', 120)->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

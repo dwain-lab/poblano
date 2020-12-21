@@ -2,84 +2,54 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookMailableForm;
 use App\Models\Book;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class BookController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function bookingStore(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email'],
+            'message' => ['required'],
+            'phone' => ['required'],
+            'date' => ['required', 'date'],
+            'time' => ['required', 'date_format:H:i'],
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Book $book)
-    {
-        //
-    }
+        $rules = [
+            'people' => ['numeric', 'max:100', 'digits_between:1,100'],
+        ];
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Book $book)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Book $book)
-    {
-        //
-    }
+        $customMessages = [
+            'people.max' => '# of people must be less than 101',
+            'people.numeric' => '# of people must be a number',
+            'people.digits_between' => '# of people must be between 1 and 100',
+        ];
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Book  $book
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Book $book)
-    {
-        //
+        $this->validate($request, $rules, $customMessages);
+
+        // dd($request);
+
+        Book::create($request->all());
+
+        $name = $request->name;
+        $email = $request->email;
+        $myMessage = $request->message;
+        $phone = $request->phone;
+        $date = $request->date;
+        $time = $request->time;
+        $people = $request->people;
+
+        Mail::to('dwain22@gmail.com')->send(new BookMailableForm($name, $email, $phone, $myMessage, $date, $time, $people));
+
+        return 'Thank you '.$name.' for booking with Poblano! Your request has been received and we will be contacting you as soon as possible!';
+        // return back()->with('success', 'Thanks for contacting us! We will be contacting you as soon as possible!');
     }
 }

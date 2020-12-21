@@ -17,11 +17,11 @@ class CreateBooksTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('email');
-            $table->string('phone');
+            $table->integer('phone')->unsigned();
             $table->date('date');
-            $table->dateTime('time');
-            $table->decimal('#people',4)->unsigned();
-            $table->string('message');
+            $table->time('time');
+            $table->decimal('people',3,0)->unsigned();
+            $table->text('message');
             $table->softDeletes();
             $table->timestamps();
         });

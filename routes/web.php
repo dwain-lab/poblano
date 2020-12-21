@@ -5,6 +5,7 @@ use App\Models\Gallery;
 use App\Models\Menu;
 use App\Models\MenuCategory;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 /*
@@ -23,6 +24,8 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 // });
 
 Route::get('/', 'App\Http\Controllers\HomeController@mainIndex')->name('home');
+
+Auth::routes();
 
 
 // Route::get('/admin/gallery', function () {
@@ -85,6 +88,16 @@ Route::post('/admin/event/trash-destroy/{event}', 'App\Http\Controllers\EventCon
 
 Route::post('/contact-us', 'App\Http\Controllers\ContactController@contactUsStore')->name('contactUs.store');
 
+
+/*
+|--------------------------------------------------------------------------
+| Booking Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::post('/booking', 'App\Http\Controllers\BookController@bookingStore')->name('booking.store');
+
+
 /*
 |--------------------------------------------------------------------------
 | Menu Routes
@@ -99,10 +112,48 @@ Route::post('/admin/menu/trash-restore/{menu}', 'App\Http\Controllers\MenuContro
 
 Route::post('/admin/menu/trash-destroy/{menu}', 'App\Http\Controllers\MenuController@trashDestroy')->name('menu.trashDestroy');
 
+/*
+|--------------------------------------------------------------------------
+| Special Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::resource('/admin/special', 'App\Http\Controllers\SpecialController')->except('show');
+
+Route::get('/admin/special/trash-view', 'App\Http\Controllers\SpecialController@trashIndex')->name('special.trashIndex');
+
+Route::post('/admin/special/trash-restore/{special}', 'App\Http\Controllers\SpecialController@trashRestore')->name('special.trashRestore');
+
+Route::post('/admin/special/trash-destroy/{special}', 'App\Http\Controllers\SpecialController@trashDestroy')->name('special.trashDestroy');
+
+/*
+|--------------------------------------------------------------------------
+| Why Us Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::resource('/admin/why', 'App\Http\Controllers\WhyController')->except('show');
+
+Route::get('/admin/why/trash-view', 'App\Http\Controllers\WhyController@trashIndex')->name('why.trashIndex');
+
+Route::post('/admin/why/trash-restore/{why}', 'App\Http\Controllers\WhyController@trashRestore')->name('why.trashRestore');
+
+Route::post('/admin/why/trash-destroy/{why}', 'App\Http\Controllers\WhyController@trashDestroy')->name('why.trashDestroy');
 
 
+/*
+|--------------------------------------------------------------------------
+| Menu Categories Us Routes
+|--------------------------------------------------------------------------
+*/
 
+Route::resource('/admin/menu_category', 'App\Http\Controllers\MenuCategoryController')->except('show');
 
+Route::get('/admin/menu_category/trash-view', 'App\Http\Controllers\MenuCategoryController@trashIndex')->name('menu_category.trashIndex');
+
+Route::post('/admin/menu_category/trash-restore/{menu_category}', 'App\Http\Controllers\MenuCategoryController@trashRestore')->name('menu_category.trashRestore');
+
+Route::post('/admin/menu_category/trash-destroy/{menu_category}', 'App\Http\Controllers\MenuCategoryController@trashDestroy')->name('menu_category.trashDestroy');
 
 
 

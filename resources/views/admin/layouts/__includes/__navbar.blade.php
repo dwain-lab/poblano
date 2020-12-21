@@ -41,13 +41,18 @@
                   Menu
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href=" {{ route('menu.index') }} ">Home</a>
-                  <a class="dropdown-item" href=" {{ route('menu.create') }} ">Add New</a>
+                  <a class="dropdown-item" href=" {{ route('menu.index') }} ">Menu Home</a>
+                  <a class="dropdown-item" href=" {{ route('menu.create') }} ">Add New Menu</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href=" {{ route('menu.trashIndex') }} ">Trash Can</a>
+                  <a class="dropdown-item" href=" {{ route('menu.trashIndex') }} ">Menu Trash Can</a>
+                  <div class="dropdown-divider"></div>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href=" {{ route('menu_category.index') }} ">Category Home</a>
+                  <a class="dropdown-item" href=" {{ route('menu_category.create') }} ">Add New Category</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href=" {{ route('menu_category.trashIndex') }} ">Category Trash Can</a>
                 </div>
               </li>
-              <li><a href="#specials">Specials</a></li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Event
@@ -70,7 +75,29 @@
                   <a class="dropdown-item" href=" {{ route('gallery.trashIndex') }} ">Trash Can</a>
                 </div>
               </li>
-              <li><a href="#contact">Contact</a></li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Special
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href=" {{ route('special.index') }} ">Home</a>
+                  <a class="dropdown-item" href=" {{ route('special.create') }} ">Add New</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href=" {{ route('special.trashIndex') }} ">Trash Can</a>
+                </div>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Why
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href=" {{ route('why.index') }} ">Home</a>
+                  <a class="dropdown-item" href=" {{ route('why.create') }} ">Add New</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href=" {{ route('why.trashIndex') }} ">Trash Can</a>
+                </div>
+              </li>
+              {{-- <li><a href="#contact">Contact</a></li> --}}
               {{-- <li class="book-a-table text-center"><a href="#book-a-table">Book a table</a></li> --}}
             </ul>
           </nav><!-- .nav-menu -->

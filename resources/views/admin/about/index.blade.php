@@ -1,9 +1,38 @@
 @extends('admin.layouts.app')
 
-
 <div class="container">
 
     @section('content')
+
+    @if ($search = Session::get('search'))
+<div class="alert alert-success">
+    <p>{{ $search }} records returned successfully</p>
+</div>
+@endif
+
+@if(!is_null ($search) && $search == 0)
+<div class="alert alert-warning">
+    <p>{{ $search }} records returned</p>
+</div>
+@endif
+
+
+@if ($message = Session::get('success'))
+<div class="alert alert-success">
+    <p>{{ $message }}</p>
+</div>
+@endif
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
         <div class="container position-relative text-lg-left aos-init aos-animate">
 

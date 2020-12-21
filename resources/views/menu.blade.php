@@ -8,29 +8,34 @@
         </div>
 
         <div class="row" data-aos="fade-up" data-aos-delay="100">
-        <div class="col-lg-12 d-flex justify-content-center">
-            <ul id="menu-flters">
-            <li data-filter="*" class="filter-active">All</li>
-            <li data-filter=".filter-starters">Starters</li>
-            <li data-filter=".filter-salads">Salads</li>
-            <li data-filter=".filter-specialty">Specialty</li>
-            </ul>
-        </div>
+            <div class="col-lg-12 d-flex justify-content-center">
+                <ul id="menu-flters">
+                    <li data-filter="*" class="filter-active">All</li>
+
+                    @foreach ($menu_categories as $category)
+                        <li data-filter=".filter-{{ $category['name'] }}">{{ Str::ucfirst($category['name']) }}</li>
+                    @endforeach
+                {{-- <li data-filter=".filter-starters">Starters</li>
+                <li data-filter=".filter-salads">Salads</li>
+                <li data-filter=".filter-specialties">Specialties</li> --}}
+                </ul>
+            </div>
         </div>
 
         <div class="row menu-container" data-aos="fade-up" data-aos-delay="200">
-
-        <div class="col-lg-6 menu-item filter-starters">
-            <img src="assets/img/menu/lobster-bisque.jpg" class="menu-img" alt="">
-            <div class="menu-content">
-            <a href="#">Lobster Bisque</a><span>$5.95</span>
+        @foreach ($menus as $menu)
+            <div class="col-lg-6 menu-item filter-{{ $menu->menu_category->name }}">
+                <img src="{{ $menu->getFirstMediaUrl('menus-collection', 'thumb') }}" class="menu-img" alt="{{ $menu->dish }}">
+                <div class="menu-content">
+                <a href="#">{{ $menu->dish }}</a><span>${{ $menu->cost }}</span>
+                </div>
+                <div class="menu-ingredients">
+                {{ $menu->ingredients }}
+                </div>
             </div>
-            <div class="menu-ingredients">
-            Lorem, deren, trataro, filede, nerada
-            </div>
-        </div>
+        @endforeach
 
-        <div class="col-lg-6 menu-item filter-specialty">
+        {{-- <div class="col-lg-6 menu-item filter-specialty">
             <img src="assets/img/menu/bread-barrel.jpg" class="menu-img" alt="">
             <div class="menu-content">
             <a href="#">Bread Barrel</a><span>$6.95</span>
@@ -108,10 +113,10 @@
             <div class="menu-ingredients">
             Plump lobster meat, mayo and crisp lettuce on a toasted bulky roll
             </div>
-        </div>
+        </div> --}}
 
         </div>
 
     </div>
     </section><!-- End Menu Section -->
-    
+

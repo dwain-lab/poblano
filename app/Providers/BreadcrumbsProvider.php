@@ -6,6 +6,9 @@ use App\Models\About;
 use App\Models\Event;
 use App\Models\Gallery;
 use App\Models\Menu;
+use App\Models\MenuCategory;
+use App\Models\Special;
+use App\Models\Why;
 use Illuminate\Support\ServiceProvider;
 use Tabuna\Breadcrumbs\Breadcrumbs;
 use Tabuna\Breadcrumbs\Trail;
@@ -114,6 +117,77 @@ class BreadcrumbsProvider extends ServiceProvider
         $trail
             ->parent('menu.index', route('menu.index'))
             ->push('Edit Menu', route('menu.edit',$menu->id))
+        );
+
+
+        Breadcrumbs::for('special.index', fn (Trail $trail) =>
+        $trail->push('Special', route('special.index'))
+        );
+
+        Breadcrumbs::for('special.create', fn (Trail $trail) =>
+        $trail
+            ->parent('special.index', route('special.index'))
+            ->push('Add Special', route('special.create'))
+        );
+
+        Breadcrumbs::for('special.trashIndex', fn (Trail $trail) =>
+        $trail
+        ->parent('special.index', route('special.index'))
+        ->push('Trash', route('special.trashIndex'))
+        );
+
+        Breadcrumbs::for('special.edit', fn (Trail $trail, Special $special) =>
+        $trail
+            ->parent('special.index', route('special.index'))
+            ->push('Edit Special', route('special.edit',$special->id))
+        );
+
+
+        Breadcrumbs::for('why.index', fn (Trail $trail) =>
+        $trail->push('Why', route('why.index'))
+        );
+
+        Breadcrumbs::for('why.create', fn (Trail $trail) =>
+        $trail
+            ->parent('why.index', route('why.index'))
+            ->push('Add Why', route('why.create'))
+        );
+
+        Breadcrumbs::for('why.trashIndex', fn (Trail $trail) =>
+        $trail
+        ->parent('why.index', route('why.index'))
+        ->push('Trash', route('why.trashIndex'))
+        );
+
+        Breadcrumbs::for('why.edit', fn (Trail $trail, Why $why) =>
+        $trail
+            ->parent('why.index', route('why.index'))
+            ->push('Edit Why', route('why.edit',$why->id))
+        );
+
+
+
+
+        Breadcrumbs::for('menu_category.index', fn (Trail $trail) =>
+        $trail->push('Menu_Category', route('menu_category.index'))
+        );
+
+        Breadcrumbs::for('menu_category.create', fn (Trail $trail) =>
+        $trail
+            ->parent('menu_category.index', route('menu_category.index'))
+            ->push('Add Menu_Category', route('menu_category.create'))
+        );
+
+        Breadcrumbs::for('menu_category.trashIndex', fn (Trail $trail) =>
+        $trail
+        ->parent('menu_category.index', route('menu_category.index'))
+        ->push('Trash', route('menu_category.trashIndex'))
+        );
+
+        Breadcrumbs::for('menu_category.edit', fn (Trail $trail, MenuCategory $menu_category) =>
+        $trail
+            ->parent('menu_category.index', route('menu_category.index'))
+            ->push('Edit Menu_Category', route('menu_category.edit',$menu_category->id))
         );
 
     }

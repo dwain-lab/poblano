@@ -29,6 +29,7 @@ class Menu extends Model implements HasMedia
     public $sortable = [
         'dish',
         'cost',
+        'updated_at',
     ];
 
     /**
@@ -57,18 +58,22 @@ class Menu extends Model implements HasMedia
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')
-            ->width(300)
-            ->height(180);
+            ->width(200)
+            ->height(200);
 
         $this->addMediaConversion('gallery')
-            ->width(800)
-            ->height(822);
-
+            ->width(400)
+            ->height(400);
     }
 
     public function menu_category()
     {
         return $this->belongsTo('App\Models\MenuCategory');
+    }
+
+    public function setDishAttribute($value)
+    {
+        $this->attributes['dish'] = ucwords($value);
     }
 
 

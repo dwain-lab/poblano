@@ -5,7 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\About;
 use App\Models\Event;
 use App\Models\Gallery;
+use App\Models\Menu;
+use App\Models\MenuCategory;
+use App\Models\Quote;
+use App\Models\Special;
+use App\Models\Why;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\DocBlock\Tags\See;
 
 class HomeController extends Controller
 {
@@ -31,11 +37,18 @@ class HomeController extends Controller
 
     public function mainIndex()
     {
-        $galleries = Gallery::all();
+        $galleries = Gallery::all()->random(8);
         $abouts = About::all();
         $events = Event::all();
+        $menus = Menu::all()->sortBy('dish');
+        $menu_categories = MenuCategory::all()->sortBy('name');
+        $specials = Special::all()->sortBy('link');
+        $specialFirst = $specials->pluck('id')->first();
+        $whys = Why::all();
 
-        return view('index', compact('galleries', 'abouts', 'events'));
+        $quote = Quote::all()->random(1)->first();
+
+        return view('index', compact('galleries', 'abouts', 'events', 'menus', 'menu_categories', 'specials', 'specialFirst', 'whys', 'quote'));
 
     }
 }
