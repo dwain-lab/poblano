@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Mail;
 class BookController extends Controller
 {
 
+    public function __construct()
+    {
+       $this->middleware('auth');
+    }
 
     public function bookingStore(Request $request)
     {

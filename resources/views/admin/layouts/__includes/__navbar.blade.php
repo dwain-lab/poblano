@@ -97,6 +97,25 @@
                   <a class="dropdown-item" href=" {{ route('why.trashIndex') }} ">Trash Can</a>
                 </div>
               </li>
+
+            @if(Auth::check())
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                   Hello {{ Auth::User()->name }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                        document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+                </div>
+              </li>
+            @endif
               {{-- <li><a href="#contact">Contact</a></li> --}}
               {{-- <li class="book-a-table text-center"><a href="#book-a-table">Book a table</a></li> --}}
             </ul>

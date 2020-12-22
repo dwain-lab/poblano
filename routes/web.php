@@ -19,18 +19,11 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/welcome', function () {
+    return view('welcome');
+});
 
 Route::get('/', 'App\Http\Controllers\HomeController@mainIndex')->name('home');
-
-Auth::routes();
-
-
-// Route::get('/admin/gallery', function () {
-//     return view('admin.gallery.index');
-// });
 
 
 /*
@@ -157,10 +150,15 @@ Route::post('/admin/menu_category/trash-destroy/{menu_category}', 'App\Http\Cont
 
 
 
+Auth::routes([
 
+    'register' => false, // Registration Routes...
+    'reset' => false, // Password Reset Routes...
+    'verify' => false, // Email Verification Routes...
 
+]);
 
-
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 
@@ -237,6 +235,3 @@ Route::post('/admin/menu_category/trash-destroy/{menu_category}', 'App\Http\Cont
 
 
 // });
-
-
-
