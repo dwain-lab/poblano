@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Haruncpi\LaravelUserActivity\Traits\Loggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -12,7 +13,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Menu extends Model implements HasMedia
 {
-    use HasFactory, SoftDeletes, Sortable, InteractsWithMedia;
+    use HasFactory, SoftDeletes, Sortable, InteractsWithMedia, Loggable;
 
         /**
      * The attributes that are mass assignable.
