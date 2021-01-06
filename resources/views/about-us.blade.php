@@ -13,7 +13,7 @@
 
             <h3>{{ $about ->heading }}</h3>
             <p class="font-italic">
-                {{ $about->intro }}
+                {!! $about->intro !!}
             </p>
             <ul>
                 <li><i class="icofont-check-circled"></i> {{ $about->point1 }} </li>
@@ -21,7 +21,7 @@
                 <li><i class="icofont-check-circled"></i> {{ $about->point3 }}</li>
             </ul>
             <p>
-                {{ $about->end }}
+                {!! $about->end !!}
             </p>
 
         @endforeach

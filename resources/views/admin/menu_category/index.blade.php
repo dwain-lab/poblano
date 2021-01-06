@@ -1,5 +1,7 @@
 @extends('admin.layouts.app')
 
+@section('active_menu', 'active')
+
 <div class="container">
 
     @section('content')
@@ -61,12 +63,14 @@
             <tr>
                 {{-- <th>No</th> --}}
                 <th> @sortablelink('name' , 'Name') </th>
+                <th> @sortablelink('slug' , 'Slug') </th>
                 <th> @sortablelink('updated_at' , 'Date Updated') </th>
                 <th width="250px">Action</th>
             </tr>
             @foreach ($menu_categories as $menu_category)
                 <tr>
                     <td>{{ $menu_category->name }}</td>
+                    <td>{{ $menu_category->slug }}</td>
                     <td>{{ $menu_category->updated_at->diffForHumans() }}</td>
                     <td>
                             {!! Form::open(['route' => ['menu_category.destroy', $menu_category->id], 'method' => 'post']) !!}

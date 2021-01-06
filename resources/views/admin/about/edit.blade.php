@@ -1,5 +1,21 @@
 @extends('admin.layouts.app')
 
+@section('active_about', 'active')
+
+@section('scriptHead')
+    <script src="https://cdn.tiny.cloud/1/4hzpk0nf0c7okc8slescpg6wcqkxjo7mb3fl5u5nd3i81cx8/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+          selector: 'textarea',
+          browser_spellcheck: true,
+          menubar: false,
+          plugins: 'lists, wordcount',
+          toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | wordcount',
+        });
+      </script>
+@endsection
+
 @section('content')
 
 <div class="container position-relative text-lg-left aos-init aos-animate">
@@ -42,7 +58,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>{!! Form::label('intro', 'Introduction') !!}</strong>
-                    {!! Form::textarea('intro', $about->intro, ['placeholder'=>'Enter an Introduction', 'class'=>'form-control tinyeditor', 'spellcheck'=>'true']) !!}
+                    {!! Form::textarea('intro', $about->intro, ['placeholder'=>'Enter an Introduction', 'class'=>'form-control', 'spellcheck'=>'true']) !!}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
@@ -66,7 +82,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>{!! Form::label('end', 'Conclusion') !!}</strong>
-                    {!! Form::textarea('end', $about->end, ['placeholder'=>'Enter a conclusion', 'class'=>'form-control tinyeditor', 'spellcheck'=>'true']) !!}
+                    {!! Form::textarea('end', $about->end, ['placeholder'=>'Enter a conclusion', 'class'=>'form-control', 'spellcheck'=>'true']) !!}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -76,13 +92,4 @@
 
     {!! Form::close() !!}
 </div>
-
-  {{-- <script src="https://cdn.tiny.cloud/1/4hzpk0nf0c7okc8slescpg6wcqkxjo7mb3fl5u5nd3i81cx8/tinymce/5/tinymce.min.js"></script>
-<script>
-    tinymce.init({
-        selector:'textarea.tinyeditor',
-        browser_spellcheck: true,
-    });
-</script> --}}
-
 @endsection

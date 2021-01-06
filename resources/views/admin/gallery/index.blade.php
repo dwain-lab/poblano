@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
 
+@section('active_gallery', 'active')
 
 <div class="container">
 

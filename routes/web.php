@@ -19,12 +19,11 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 |
 */
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
+// Route::get('/welcome', function () {
+//     return view('welcome');
+// });
 
 Route::get('/', 'App\Http\Controllers\HomeController@mainIndex')->name('home');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +53,8 @@ Route::get('/admin/about/trash-view', 'App\Http\Controllers\AboutController@tras
 Route::post('/admin/about/trash-restore/{about}', 'App\Http\Controllers\AboutController@trashRestore')->name('about.trashRestore');
 
 Route::post('/admin/about/trash-destroy/{about}', 'App\Http\Controllers\AboutController@trashDestroy')->name('about.trashDestroy');
+
+Route::get('/admin', 'App\Http\Controllers\AboutController@index')->name('admin-home');
 
 /*
 |--------------------------------------------------------------------------
@@ -149,6 +150,11 @@ Route::post('/admin/menu_category/trash-restore/{menu_category}', 'App\Http\Cont
 Route::post('/admin/menu_category/trash-destroy/{menu_category}', 'App\Http\Controllers\MenuCategoryController@trashDestroy')->name('menu_category.trashDestroy');
 
 
+/*
+|--------------------------------------------------------------------------
+| Auth Routes
+|--------------------------------------------------------------------------
+*/
 
 Auth::routes([
 

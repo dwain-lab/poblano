@@ -1,5 +1,7 @@
 @extends('admin.layouts.app')
 
+@section('active_about', 'active')
+
 <div class="container">
 
     @section('content')
@@ -57,7 +59,7 @@
 
         <div class="container">
 
-            <table class="table table-bordered table-responsive-lg">
+            <table class="table table-bordered table-responsive-lg" style="overflow-x: auto">
             <tr>
                 {{-- <th>No</th> --}}
                 <th> @sortablelink('heading' , 'Heading') </th>
@@ -72,11 +74,11 @@
             @foreach ($abouts as $about)
                 <tr>
                     <td>{{ $about->heading }}</td>
-                    <td>{{ $about->intro }}</td>
+                    <td>{!! $about->intro !!}</td>
                     <td>{{ $about->point1 }}</td>
                     <td>{{ $about->point2 }}</td>
                     <td>{{ $about->point3 }}</td>
-                    <td>{{ $about->end }}</td>
+                    <td>{!! $about->end !!}</td>
                     <td>{{ $about->updated_at->diffForHumans() }}</td>
                     <td>
                             {!! Form::open(['route' => ['about.destroy', $about->id], 'method' => 'post']) !!}

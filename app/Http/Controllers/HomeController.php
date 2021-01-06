@@ -22,7 +22,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-         $this->middleware('guest');
+        //  $this->middleware('guest');
     }
 
     /**
@@ -41,10 +41,12 @@ class HomeController extends Controller
         $abouts = About::all();
         $events = Event::all();
         $menus = Menu::all()->sortBy('dish');
-        $menu_categories = MenuCategory::all()->sortBy('name');
+        $menu_categories = MenuCategory::has('menus')->get()->sortBy('name');
         $specials = Special::all()->sortBy('link');
         $specialFirst = $specials->pluck('id')->first();
         $whys = Why::all();
+
+        // dd($menu_categories);
 
         $quote = Quote::all()->random(1)->first();
 

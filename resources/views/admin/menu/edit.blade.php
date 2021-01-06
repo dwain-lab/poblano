@@ -1,5 +1,7 @@
 @extends('admin.layouts.app')
 
+@section('active_menu', 'active')
+
 @section('content')
 
 <div class="container position-relative text-lg-left aos-init aos-animate">

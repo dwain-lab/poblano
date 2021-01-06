@@ -12,7 +12,7 @@
 <script src={{ asset('assets/vendor/aos/aos.js') }}></script>
 
 <!-- Template Main JS File -->
-<script src={{ asset('assets/js/main.js') }}></script>
+<script src={{ asset('assets/js/admin_main.js') }}></script>
 
 </body>
 

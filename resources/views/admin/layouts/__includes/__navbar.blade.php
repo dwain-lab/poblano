@@ -24,8 +24,8 @@
 
           <nav class="nav-menu d-none d-lg-block">
             <ul>
-              <li class="active"><a href="index.html">Home</a></li>
-              <li class="nav-item dropdown">
+              <li><a href="{{ route('home') }}">Home</a></li>
+              <li class="nav-item dropdown @yield('active_about')">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   About
                 </a>
@@ -36,7 +36,7 @@
                   <a class="dropdown-item" href=" {{ route('about.trashIndex') }} ">Trash Can</a>
                 </div>
               </li>
-              <li class="nav-item dropdown">
+              <li class="nav-item dropdown @yield('active_menu')">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Menu
                 </a>
@@ -53,7 +53,7 @@
                   <a class="dropdown-item" href=" {{ route('menu_category.trashIndex') }} ">Category Trash Can</a>
                 </div>
               </li>
-              <li class="nav-item dropdown">
+              <li class="nav-item dropdown @yield('active_event')">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Event
                 </a>
@@ -64,7 +64,7 @@
                   <a class="dropdown-item" href=" {{ route('event.trashIndex') }} ">Trash Can</a>
                 </div>
               </li>
-              <li class="nav-item dropdown">
+              <li class="nav-item dropdown @yield('active_gallery')">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Gallery
                 </a>
@@ -75,7 +75,7 @@
                   <a class="dropdown-item" href=" {{ route('gallery.trashIndex') }} ">Trash Can</a>
                 </div>
               </li>
-              <li class="nav-item dropdown">
+              <li class="nav-item dropdown @yield('active_special')">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Special
                 </a>
@@ -86,7 +86,7 @@
                   <a class="dropdown-item" href=" {{ route('special.trashIndex') }} ">Trash Can</a>
                 </div>
               </li>
-              <li class="nav-item dropdown">
+              <li class="nav-item dropdown @yield('active_why')">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   Why
                 </a>
@@ -113,6 +113,7 @@
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                         @csrf
                     </form>
+                    <a class="dropdown-item" href=" {{ route('admin.user-activity') }} ">User Activity</a>
                 </div>
               </li>
             @endif

@@ -49,6 +49,7 @@ class MenuCategoryController extends Controller
     {
         $request->validate([
             'name'        =>      'required|unique:menu_categories,name',
+            'slug'        =>      'required|unique:menu_categories,slug|alpha_dash',
         ]);
 
         MenuCategory::create($request->all());
@@ -72,7 +73,8 @@ class MenuCategoryController extends Controller
     public function update(Request $request, MenuCategory $menu_category)
     {
         $request->validate([
-            'name'        =>      'required|unique:menu_categories,name',
+            'name'        =>      'required',
+            'slug'        =>      'required|alpha_dash',
         ]);
 
         $menu_category->update($request->all());

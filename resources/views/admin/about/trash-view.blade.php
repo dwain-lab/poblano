@@ -1,5 +1,6 @@
 @extends('admin.layouts.app')
 
+@section('active_about', 'active')
 
 <div class="container">
 
@@ -58,7 +59,7 @@
 
         <div class="container">
 
-            <table class="table table-bordered table-responsive-lg">
+            <table class="table table-bordered table-responsive-lg" style="overflow-x: auto">
             <tr>
                 {{-- <th>No</th> --}}
                 <th> @sortablelink('heading' , 'Heading') </th>

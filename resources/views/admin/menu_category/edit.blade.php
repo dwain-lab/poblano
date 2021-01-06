@@ -1,5 +1,7 @@
 @extends('admin.layouts.app')
 
+@section('active_menu', 'active')
+
 @section('content')
 
 <div class="container position-relative text-lg-left aos-init aos-animate">
@@ -37,6 +39,12 @@
                 <div class="form-group">
                     <strong>{!! Form::label('name', 'Name') !!}</strong>
                     {!! Form::text('name', $menu_category->name, ['placeholder'=>'Enter a name', 'class'=>'form-control', 'spellcheck'=>'true', 'required']) !!}
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="form-group">
+                    <strong>{!! Form::label('slug', 'Slug* (No space. Use dash to separate words)') !!}</strong>
+                    {!! Form::text('slug', $menu_category->slug, ['placeholder'=>'Enter a slug (No space. Use dash to separate words)', 'class'=>'form-control', 'required']) !!}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">

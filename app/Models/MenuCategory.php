@@ -19,16 +19,23 @@ class MenuCategory extends Model
      */
     protected $fillable = [
         'name',
+        'slug',
     ];
 
     public $sortable = [
         'name',
-        'updated_at'
+        'slug',
+        'updated_at',
     ];
 
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = strtolower($value);
+    }
+
+    public function setSlugAttribute($value)
+    {
+        $this->attributes['slug'] = strtolower($value);
     }
 
     public function menus()
