@@ -40,7 +40,8 @@ class HomeController extends Controller
         $galleries = Gallery::all()->random(8);
         $abouts = About::all();
         $events = Event::all();
-        $menus = Menu::all()->sortBy('dish');
+        // $menus = Menu::all()->sortBy('dish');
+        $menus = Menu::has('menu_category')->get()->sortBy('dish');
         $menu_categories = MenuCategory::has('menus')->get()->sortBy('name');
         $specials = Special::all()->sortBy('link');
         $specialFirst = $specials->pluck('id')->first();

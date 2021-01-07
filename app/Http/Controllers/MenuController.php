@@ -23,9 +23,9 @@ class MenuController extends Controller
     public function index()
     {
         session()->forget('search');
-        $menus = Menu::all();
+        // $menus = Menu::all();
 
-        $menus = Menu::sortable()->latest('updated_at')->paginate(5);
+        $menus = Menu::sortable()->has('menu_category')->latest('updated_at')->paginate(5);
         return view('admin.menu.index', compact('menus'));
     }
 

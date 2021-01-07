@@ -1,6 +1,6 @@
 @extends('admin.layouts.app')
 
-@section('active_m', 'active')
+@section('active_menu', 'active')
 
 <div class="container">
 
