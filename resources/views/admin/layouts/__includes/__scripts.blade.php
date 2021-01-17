@@ -1,5 +1,6 @@
 <div id="preloader"></div>
-<a href="#" class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
+<a href="#"
+   class="back-to-top"><i class="bx bx-up-arrow-alt"></i></a>
 
 <!-- Vendor JS Files -->
 <script src={{ asset('assets/vendor/jquery/jquery.min.js') }}></script>

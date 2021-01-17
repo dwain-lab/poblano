@@ -1949,3 +1949,6 @@ input[type="time"]::-webkit-calendar-picker-indicator:hover {
     display: inline-block;
     margin: 100px auto;
 }
+.invalid-feedback {
+    display: block;
+}

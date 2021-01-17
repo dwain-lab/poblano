@@ -1,5 +1,3 @@
-<!-- HEADER -->
-
 @include('admin.layouts.__includes.__head')
 
 @include('admin.layouts.__includes.__topbar')

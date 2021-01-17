@@ -1,12 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Models\Gallery;
-use App\Models\Menu;
-use App\Models\MenuCategory;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,7 +34,6 @@ Route::post('/admin/gallery/trash-destroy/{gallery}', 'App\Http\Controllers\Gall
 
 Route::resource('/admin/gallery', 'App\Http\Controllers\GalleryController')->except('show');
 
-
 /*
 |--------------------------------------------------------------------------
 | About Routes
@@ -50,9 +44,9 @@ Route::resource('/admin/about', 'App\Http\Controllers\AboutController')->except(
 
 Route::get('/admin/about/trash-view', 'App\Http\Controllers\AboutController@trashIndex')->name('about.trashIndex');
 
-Route::post('/admin/about/trash-restore/{about}', 'App\Http\Controllers\AboutController@trashRestore')->name('about.trashRestore');
+Route::put('/admin/about/trash-restore/{about}', 'App\Http\Controllers\AboutController@trashRestore')->name('about.trashRestore');
 
-Route::post('/admin/about/trash-destroy/{about}', 'App\Http\Controllers\AboutController@trashDestroy')->name('about.trashDestroy');
+Route::delete('/admin/about/trash-destroy/{about}', 'App\Http\Controllers\AboutController@trashDestroy')->name('about.trashDestroy');
 
 Route::get('/admin', 'App\Http\Controllers\AboutController@index')->name('admin-home');
 
@@ -70,8 +64,6 @@ Route::post('/admin/event/trash-restore/{event}', 'App\Http\Controllers\EventCon
 
 Route::post('/admin/event/trash-destroy/{event}', 'App\Http\Controllers\EventController@trashDestroy')->name('event.trashDestroy');
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Contact Routes
@@ -82,7 +74,6 @@ Route::post('/admin/event/trash-destroy/{event}', 'App\Http\Controllers\EventCon
 
 Route::post('/contact-us', 'App\Http\Controllers\ContactController@contactUsStore')->name('contactUs.store');
 
-
 /*
 |--------------------------------------------------------------------------
 | Booking Routes
@@ -90,7 +81,6 @@ Route::post('/contact-us', 'App\Http\Controllers\ContactController@contactUsStor
 */
 
 Route::post('/booking', 'App\Http\Controllers\BookController@bookingStore')->name('booking.store');
-
 
 /*
 |--------------------------------------------------------------------------
@@ -134,7 +124,6 @@ Route::post('/admin/why/trash-restore/{why}', 'App\Http\Controllers\WhyControlle
 
 Route::post('/admin/why/trash-destroy/{why}', 'App\Http\Controllers\WhyController@trashDestroy')->name('why.trashDestroy');
 
-
 /*
 |--------------------------------------------------------------------------
 | Menu Categories Us Routes
@@ -149,7 +138,6 @@ Route::post('/admin/menu_category/trash-restore/{menu_category}', 'App\Http\Cont
 
 Route::post('/admin/menu_category/trash-destroy/{menu_category}', 'App\Http\Controllers\MenuCategoryController@trashDestroy')->name('menu_category.trashDestroy');
 
-
 /*
 |--------------------------------------------------------------------------
 | Auth Routes
@@ -157,33 +145,14 @@ Route::post('/admin/menu_category/trash-destroy/{menu_category}', 'App\Http\Cont
 */
 
 Auth::routes([
-
     'register' => false, // Registration Routes...
-    'reset' => false, // Password Reset Routes...
-    'verify' => false, // Email Verification Routes...
-
+    'reset'    => false, // Password Reset Routes...
+    'verify'   => false, // Email Verification Routes...
 ]);
 
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Route::get('/media', function() {
-
-
 
 //     // $file = public_path().'/img/gw2.jpg';
 //     $file = public_path().'/img/guildwars2.jpg';
@@ -217,7 +186,6 @@ Auth::routes([
 
 //     //dd($mediaItems);
 
-
 // });
 
 // Route::get('/delete-media', function() {
@@ -238,6 +206,5 @@ Auth::routes([
 //     $categories = MenuCategory::find(2);
 
 //      dd($categories->menus);
-
 
 // });
