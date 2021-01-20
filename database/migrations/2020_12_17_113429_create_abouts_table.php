@@ -8,18 +8,17 @@ class CreateAboutsTable extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
-        Schema::create('abouts', function (Blueprint $table) {
+        Schema::create('abouts', function (Blueprint $table)
+        {
             $table->id();
             $table->text('heading');
             $table->text('intro');
             $table->text('point1');
-            $table->text('point2');
-            $table->text('point3');
+            $table->text('point2')->nullable();
+            $table->text('point3')->nullable();
             $table->text('end');
             $table->softDeletes();
             $table->timestamps();
@@ -28,8 +27,6 @@ class CreateAboutsTable extends Migration
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
