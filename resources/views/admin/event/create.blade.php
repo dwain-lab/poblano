@@ -123,8 +123,9 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>{!! Form::label('file', '*File (Only JPEG images)') !!}</strong>
-                    {!! Form::file('file', ['class' => 'form-control' . ($errors->has('file') ? ' is-invalid' : null), 'id'
-                    => 'file', $errors->has('file') ? 'autofocus' : null]) !!}
+                    {!! Form::file('file', ['class' => 'form-control ' . (Session::get('error') ? ' is-invalid' : null) .
+                    ($errors->has('file') ? 'is-invalid' : null), Session::get('error') ? 'autofocus' : null,
+                    $errors->has('file') ? 'autofocus' : null]) !!}
                     @error('file')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -141,10 +142,9 @@
             </div>
         </div>
         {!! Form::close() !!}
-    </div>
+    @section('validationScripts')
+        @include('admin.layouts.__includes.__validation_script')
+    @endsection
+</div>
 
-@endsection
-
-@section('validationScripts')
-    @include('admin.layouts.__includes.__validation_script')
 @endsection

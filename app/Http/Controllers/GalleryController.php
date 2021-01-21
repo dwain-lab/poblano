@@ -57,24 +57,32 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
+        $request->merge([
+            'name' => Str::lower($request->file('file')->getClientOriginalName()),
+        ]);
+
+        // dd($request->all());
+
         $request->validate([
-            'name'         => ['required', 'unique:galleries,name'],
+            'name'         => ['unique:galleries,name'],
             'file'         => ['required', 'mimes:jpg', 'max:2048'],
         ]);
 
-        $gallery = Gallery::create($request->all());
+        $file  = Str::lower($request->file('file')->getClientOriginalName());
+        $ext   = Str::lower($request->file('file')->getClientOriginalExtension());
+
+        $gallery = Gallery::create(
+            ['name' => $file],
+        );
 
         if ($gallery)
         {
             $gallery->addMedia($request->file('file'))
-                ->usingName($request->name)
-                ->usingFileName($request->name.'.jpg')
                 ->toMediaCollection('gallery-collection')
             ;
 
             return redirect()->route('gallery.index')
-                ->with('success', $request->name.' created successfully.')
+                ->with('success', $file.' created successfully.')
             ;
         }
 
@@ -99,50 +107,48 @@ class GalleryController extends Controller
     public function update(Request $request, Gallery $gallery)
     {
         $request->validate([
-            'name'         => ['required'],
-            'file'         => ['mimes:jpg', 'max:2048', 'nullable'],
+            // 'name'         => ['unique:galleries,name'],
+            'file'         => ['mimes:jpg', 'max:2048', 'required'],
         ]);
 
-        if (null == ($request->file))
+        // if (null == ($request->file))
+        // {
+        //     if ($gallery->update($request->all()))
+        //     {
+        //         if ($gallery->wasChanged())
+        //         {
+        //             return redirect()->route('gallery.index')
+        //                 ->with('success', $request->name.' Updated successfully')
+        //             ;
+        //         }
+
+        //         return redirect()->route('gallery.index')
+        //             ->with('warning', 'Nothing was updated!')
+        //         ;
+        //     }
+        // }
+        // else
+        // {
+        $fileName = Str::lower($gallery->getFirstMedia('gallery-collection')->name);
+        // $file     = Str::lower($request->file('file')->getClientOriginalName());
+
+        if ($this->checkFiles($request, ['jpg', 'jpeg'], $fileName))
         {
-            if ($gallery->update($request->all()))
-            {
-                if ($gallery->wasChanged())
-                {
-                    return redirect()->route('gallery.index')
-                        ->with('success', $request->name.' Updated successfully')
-                    ;
-                }
-
-                return redirect()->route('gallery.index')
-                    ->with('warning', 'Nothing was updated!')
-                ;
-            }
-        }
-        else
-        {
-            if (Str::lower($gallery->getFirstMedia('gallery-collection')->name) == Str::lower(basename($request->file->getClientOriginalName(), '.jpg')))
-            {
-                return Redirect::back()->with('error', 'Error updating.  File already exist. Please fix file and upload.');
-            }
-
-            $gallery->clearMediaCollection('gallery-collection');
-            $gallery->addMedia($request
-                ->file('file'))
-                ->usingName($request->name)
-                ->usingFileName($request->name.'.jpg')
-                ->toMediaCollection('gallery-collection')
-            ;
-            $gallery->name       = $request->name;
-            $gallery->updated_at = now();
-            $gallery->save();
-
-            return redirect()->route('gallery.index')
-                ->with('success', $request->name.' Updated successfully')
-            ;
+            return Redirect::back()->with('error', 'Error updating.  File already exist. Please fix file and upload.');
         }
 
-        return back()->with('error', 'Unable to update the Events Table. Please try again.');
+        $gallery->clearMediaCollection('gallery-collection');
+        $gallery->addMedia($request
+            ->file('file'))
+            ->toMediaCollection('gallery-collection')
+            ;
+        $gallery->updated_at = now();
+        $gallery->save();
+
+        return redirect()->route('gallery.index')
+            ->with('success', $request->name.' Updated successfully')
+            ;
+        // }
     }
 
     /**
@@ -209,5 +215,25 @@ class GalleryController extends Controller
         }
 
         return Redirect::back()->with('error', 'Error deleting.  Please try again.');
+    }
+
+    private function checkFiles(Request $request, array $fileExt, string $fileName)
+    {
+        $fileNameExt = Str::lower($request->file->getClientOriginalName());
+
+        foreach ($fileExt as $ext)
+        {
+            if (Str::lower($request->file->getClientOriginalExtension()) == $ext)
+            {
+                if (basename($fileNameExt, '.'.$ext) == $fileName)
+                {
+                    return 1;
+                }
+
+                return 0;
+            }
+        }
+
+        return 0;
     }
 }

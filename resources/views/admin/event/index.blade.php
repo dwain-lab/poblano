@@ -72,7 +72,8 @@
                         <td>{{ Str::limit($event->point3, 30) }}</td>
                         <td>{!! Str::limit(html_entity_decode($event->end), 40) !!}</td>
                         <td style="text-align: center;"> <img
-                                src="{{ $event->getFirstMediaUrl('event-collection', 'thumb') }}"> </td>
+                                src="{{ File::exists($event->getFirstMediaPath('event-collection', 'thumb')) ? $event->getFirstMediaUrl('event-collection', 'thumb') : 'https://via.placeholder.com/270x180.jpg?text=Upload+an+image' }}">
+                        </td>
                         <td>{{ $event->updated_at->diffForHumans() }}</td>
                         <td style="padding: 0%">
                             <div class="row" style="margin-left: auto">

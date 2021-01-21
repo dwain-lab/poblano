@@ -51,7 +51,7 @@
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>{!! Form::label('heading', 'Heading') !!}</strong>
+                    <strong>{!! Form::label('heading', '*Heading') !!}</strong>
                     {!! Form::text('heading', $event->heading, [
                     'placeholder' => 'Enter a heading',
                     'class' =>
@@ -67,7 +67,7 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>{!! Form::label('cost', 'Price') !!}</strong>
+                    <strong>{!! Form::label('cost', '*Price') !!}</strong>
                     {!! Form::text('cost', $event->cost, ['placeholder' => 'Enter a price', 'class' => 'form-control ' .
                     ($errors->has('cost') ? ' is-invalid' : null), 'spellcheck' => 'true', $errors->has('cost') ?
                     'autofocus' : null]) !!}
@@ -78,7 +78,7 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>{!! Form::label('intro', 'Introduction') !!}</strong>
+                    <strong>{!! Form::label('intro', '*Introduction') !!}</strong>
                     {!! Form::textarea('intro', $event->intro, ['placeholder' => 'Enter an Introduction', 'class' =>
                     'form-control tinyeditor', 'spellcheck' => 'true']) !!}
                     @error('intro')
@@ -88,7 +88,7 @@
             </div>
             <div class=" col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>{!! Form::label('point1', 'Point 1') !!}</strong>
+                    <strong>{!! Form::label('point1', '*Point 1') !!}</strong>
                     {!! Form::text('point1', $event->point1, [
                     'placeholder' => 'Enter a point',
                     'class' =>
@@ -104,7 +104,7 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>{!! Form::label('point2', 'Point 2') !!}</strong>
+                    <strong>{!! Form::label('point2', '*Point 2') !!}</strong>
                     {!! Form::text('point2', $event->point2, [
                     'placeholder' => 'Enter a point',
                     'class' =>
@@ -120,7 +120,7 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>{!! Form::label('point3', 'Point 3') !!}</strong>
+                    <strong>{!! Form::label('point3', '*Point 3') !!}</strong>
                     {!! Form::text('point3', $event->point3, [
                     'placeholder' => 'Enter a point',
                     'class' =>
@@ -136,7 +136,7 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>{!! Form::label('end', 'Conclusion') !!}</strong>
+                    <strong>{!! Form::label('end', '*Conclusion') !!}</strong>
                     {!! Form::textarea('end', $event->end, [
                     'placeholder' => 'Enter a conclusion',
                     'class' => 'form-control
@@ -149,13 +149,15 @@
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
-                <img src="{{ $event->getFirstMediaUrl('event-collection', 'thumb') }}">
+                <img
+                    src="{{ File::exists($event->getFirstMediaPath('event-collection', 'thumb')) ? $event->getFirstMediaUrl('event-collection', 'thumb') : 'https://via.placeholder.com/270x180.jpg?text=Upload+an+image' }}">
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>{!! Form::label('file', 'File') !!}</strong>
-                    {!! Form::file('file', ['class' => 'form-control ' . (Session::get('error') ? ' is-invalid' : null),
-                    Session::get('error') ? 'autofocus' : null]) !!}
+                    <strong>{!! Form::label('file', 'File (Only JPEG images)') !!}</strong>
+                    {!! Form::file('file', ['class' => 'form-control ' . (Session::get('error') ? ' is-invalid' : null) .
+                    ($errors->has('file') ? 'is-invalid' : null), Session::get('error') ? 'autofocus' : null,
+                    $errors->has('file') ? 'autofocus' : null]) !!}
                     @error('file')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

@@ -102,7 +102,7 @@ class SpecialController extends Controller
             'heading'        => ['required'],
             'intro'          => ['required'],
             'end'            => ['required'],
-            'file'           => ['mimes:jpg,png', 'max:1048'],
+            'file'           => ['mimes:jpg,png', 'max:1024', 'nullable'],
         ]);
 
         if (null == ($request->file))
