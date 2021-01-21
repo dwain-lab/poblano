@@ -16,7 +16,7 @@ class EventController extends Controller
      */
     public function __construct()
     {
-    $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     public function index()
@@ -105,7 +105,7 @@ class EventController extends Controller
             'intro'          => ['required'],
             'point1'         => ['required'],
             'point2'         => ['required'],
-            'point3'         => ['nullable'],
+            'point3'         => ['required'],
             'end'            => ['required'],
             'file'           => ['mimes:jpg', 'max:2048', 'nullable'],
         ]);
@@ -128,7 +128,7 @@ class EventController extends Controller
         }
         else
         {
-            if (Str::lower($event->getFirstMedia('event-collection')->name) == Str::lower(basename($request->file->getClientOriginalName(), '.jpg')))
+            if ($this->checkFiles($request, ['jpg', 'jpeg'], Str::lower($event->getFirstMedia('event-collection')->name)))
             {
                 return Redirect::back()->with('error', 'Error updating.  File already exist. Please fix file and upload.');
             }
@@ -201,5 +201,25 @@ class EventController extends Controller
         }
 
         return Redirect::back()->with('error', 'Error deleting.  Please try again.');
+    }
+
+    private function checkFiles(Request $request, array $fileExt, string $fileName)
+    {
+        $fileNameExt = Str::lower($request->file->getClientOriginalName());
+
+        foreach ($fileExt as $ext)
+        {
+            if (Str::lower($request->file->getClientOriginalExtension()) == $ext)
+            {
+                if (basename($fileNameExt, '.'.$ext) == $fileName)
+                {
+                    return 1;
+                }
+
+                return 0;
+            }
+        }
+
+        return 0;
     }
 }
