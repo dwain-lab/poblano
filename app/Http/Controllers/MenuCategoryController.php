@@ -20,7 +20,7 @@ class MenuCategoryController extends Controller
     public function index()
     {
         session()->forget('search');
-        $menu_categories = MenuCategory::all();
+        //$menu_categories = MenuCategory::all();
 
         $menu_categories = MenuCategory::sortable()->latest('updated_at')->paginate(5);
 
@@ -44,10 +44,22 @@ class MenuCategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name'        => 'required|unique:menu_categories,name',
-            'slug'        => 'required|unique:menu_categories,slug|alpha_dash',
-        ]);
+        $rules = [
+            'name'                => ['required', 'unique:menu_categories,name'],
+            'slug'                => ['required', 'unique:menu_categories,slug', 'alpha_dash'],
+        ];
+
+        $customMessages = [
+            'name.required'                      => 'Name required',
+            'slug.required'                      => 'Slug required',
+            'slug.alpha_dash'                    => 'Slug may only contain letters, numbers, dashes and underscores',
+        ];
+
+        // $request->validate([
+        //     'slug'        => 'unique:menu_categories,slug|alpha_dash',
+        // ]);
+
+        $this->validate($request, $rules, $customMessages);
 
         MenuCategory::create($request->all());
 

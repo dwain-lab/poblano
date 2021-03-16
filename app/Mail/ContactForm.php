@@ -4,13 +4,13 @@ namespace App\Mail;
 
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 class ContactForm extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     public $name;
     public $email;
@@ -20,12 +20,15 @@ class ContactForm extends Mailable
     /**
      * Create a new message instance.
      *
-     * @return void
+     * @param mixed $name
+     * @param mixed $email
+     * @param mixed $mySubject
+     * @param mixed $myMessage
      */
     public function __construct($name, $email, $mySubject, $myMessage)
     {
-        $this->name = $name;
-        $this->email = $email;
+        $this->name      = $name;
+        $this->email     = $email;
         $this->mySubject = $mySubject;
         $this->myMessage = $myMessage;
     }
@@ -37,10 +40,10 @@ class ContactForm extends Mailable
      */
     public function build()
     {
-
         return $this
             ->from($address = 'info@poblano.bz', $name = 'Poblano.bz')
             ->subject('New Contact Us Request-'.Carbon::now())
-            ->view('email.contact');
+            ->view('email.contact')
+        ;
     }
 }

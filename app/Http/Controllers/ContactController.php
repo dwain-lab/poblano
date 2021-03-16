@@ -9,34 +9,37 @@ use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
-    // public function mail()
+    // public function contactUsStore()
     // {
-    //    $name = 'This is a Test';
-    //    Mail::to('dwain22@gmail.com')->send(new ContactForm($name, $message, $email, $subject));
+    //     $name        = 'Dwain';
+    //     $myMessage   = 'Hello boy';
+    //     $email       = 'dwain22@gmail.com';
+    //     $mySubject   = 'Hello World';
+    //     Mail::to('dwain22@gmail.com')->send(new ContactForm($name, $email, $mySubject, $myMessage));
 
-    //    return 'Email sent Successfully';
+    //     return 'Email sent Successfully';
     // }
 
     public function contactUsStore(Request $request)
     {
+        $receiverEmail = 'dwain22@gmail.com';
         $request->validate([
-            'name' => ['required'],
-            'email' => ['required', 'email'],
+            'name'    => ['required'],
+            'email'   => ['required', 'email'],
             'message' => ['required'],
         ]);
 
+        // dd($request->all());
 
-        $name = $request->name;
-        $email = $request->email;
+        $name      = $request->name;
+        $email     = $request->email;
         $mySubject = $request->subject;
         $myMessage = $request->message;
 
-        Mail::to('dwain22@gmail.com')->send(new ContactForm($name, $email, $mySubject, $myMessage));
+        Mail::to($receiverEmail)->send(new ContactForm($name, $email, $mySubject, $myMessage));
 
         Contact::create($request->all());
 
         return 'Thank you '.$name.' for contacting Poblano! Your request has been received and someone will contact you as soon as possible!';
     }
 }
-
-

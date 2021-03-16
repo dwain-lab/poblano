@@ -67,7 +67,7 @@
     <script>
         alertify.set('notifier', 'position', 'top-center');
         alertify.set('notifier', 'delay', 10);
-        alertify.error('{{ $message }}');
+        alertify.error('Whoops! There were problems with your input. Please check the form.');
 
     </script>
 @endif

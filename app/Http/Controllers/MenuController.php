@@ -6,6 +6,7 @@ use App\Models\Menu;
 use App\Models\MenuCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Str;
 
 class MenuController extends Controller
 {
@@ -48,13 +49,26 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $rules = [
             'dish'                => ['required'],
             'cost'                => ['required', 'numeric'],
             'ingredients'         => ['required'],
             'menu_category_id'    => ['required'],
             'file'                => ['required', 'mimes:jpg', 'max:1024'],
-        ]);
+        ];
+
+        $customMessages = [
+            'dish.required'                      => 'Dish name required',
+            'cost.required'                      => 'Price required',
+            'cost.numeric'                       => 'Price must be a number',
+            'ingredients.required'               => 'Ingredients required',
+            'menu_category_id.required'          => 'Category required',
+            'file.required'                      => 'File required',
+            'file.mimes'                         => 'File must be a file of type: jpg',
+            'file.max'                           => 'File must be smaller than 1MB',
+        ];
+
+        $this->validate($request, $rules, $customMessages);
 
         // dd($request->menu_category_id);
 
@@ -100,20 +114,48 @@ class MenuController extends Controller
      */
     public function update(Request $request, Menu $menu)
     {
-        $request->validate([
+        $rules = [
             'dish'                => ['required'],
             'cost'                => ['required', 'numeric'],
             'ingredients'         => ['required'],
             'menu_category_id'    => ['required'],
             'file'                => ['mimes:jpg', 'max:1024'],
-        ]);
+        ];
+
+        $customMessages = [
+            'dish.required'                      => 'Dish name required',
+            'cost.required'                      => 'Price required',
+            'cost.numeric'                       => 'Price must be a number',
+            'ingredients.required'               => 'Ingredients required',
+            'menu_category_id.required'          => 'Category required',
+            'file.mimes'                         => 'File must be a file of type: jpg',
+            'file.max'                           => 'File must be smaller than 1MB',
+        ];
+
+        $this->validate($request, $rules, $customMessages);
 
         if (null == ($request->file))
         {
-            $menu->update($request->all());
+            if ($menu->update($request->all()))
+            {
+                if ($menu->wasChanged())
+                {
+                    return redirect()->route('menu.index')
+                        ->with('success', $request->dish.' updated successfully')
+                    ;
+                }
+
+                return redirect()->route('menu.index')
+                    ->with('warning', 'Nothing was updated!')
+                ;
+            }
         }
         else
         {
+            if ($this->checkFiles($request, ['jpg', 'jpeg'], Str::lower($menu->getFirstMedia('menus-collection')->name)))
+            {
+                return Redirect::back()->with('error', 'Error updating.  File already exist. Please fix file and upload.');
+            }
             $menu->clearMediaCollection('menus-collection');
             $menu->addMedia($request->file('file'))
                 ->toMediaCollection('menus-collection')
@@ -138,7 +180,7 @@ class MenuController extends Controller
         $menu->delete();
 
         return redirect()->route('menu.index')
-            ->with('success', $menu->number.' deleted successfully')
+            ->with('success', $menu->dish.' deleted successfully')
         ;
     }
 
@@ -152,19 +194,19 @@ class MenuController extends Controller
 
     public function trashRestore($id)
     {
-        $menu = Menu::onlyTrashed()->where('id', $id);
+        $menu = Menu::onlyTrashed()->where('id', $id)
+            ->firstOrFail()
+        ;
         $menu->restore();
 
         return redirect()->route('menu.index')
-            ->with('success', 'restored successfully')
+            ->with('success', $menu->dish.' restored successfully')
         ;
     }
 
     public function trashDestroy($id)
     {
-        $menu = Menu::onlyTrashed()
-            ->where('id', $id)
-        ;
+        $menu = Menu::onlyTrashed()->where('id', $id);
 
         $menu->restore();
 
@@ -175,10 +217,30 @@ class MenuController extends Controller
             $menu->forceDelete();
 
             return redirect()->route('menu.index')
-                ->with('success', 'File permanently deleted')
+                ->with('success', $menu->heading.' permanently deleted')
             ;
         }
 
-        return Redirect::back()->with('errors', 'Error something went wrong.  Please try again.');
+        return Redirect::back()->with('error', 'Error deleting.  Please try again.');
+    }
+
+    private function checkFiles(Request $request, array $fileExt, string $fileName)
+    {
+        $fileNameExt = Str::lower($request->file->getClientOriginalName());
+
+        foreach ($fileExt as $ext)
+        {
+            if (Str::lower($request->file->getClientOriginalExtension()) == $ext)
+            {
+                if (basename($fileNameExt, '.'.$ext) == $fileName)
+                {
+                    return 1;
+                }
+
+                return 0;
+            }
+        }
+
+        return 0;
     }
 }

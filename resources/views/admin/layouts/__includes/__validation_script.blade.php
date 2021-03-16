@@ -7,6 +7,9 @@
 
         $("#createForm").validate({
             rules: {
+                dish: "required",
+                ingredients: "required",
+                menu_category_id: "required",
                 heading: "required",
                 point1: "required",
                 file: {
@@ -19,15 +22,18 @@
                 },
             },
             messages: {
+                dish: "Dish Name required",
+                ingredients: "Ingredients required",
+                menu_category_id: "Category required",
                 heading: "Heading required",
                 point1: "Point 1 required",
                 cost: {
                     required: "Price required",
-                    number: "Enter valid number",
+                    number: "Price must be a number",
                 },
                 file: {
-                    required: "Image required",
-                    extension: "The file must be a file of type: jpg.",
+                    required: "File required",
+                    extension: "File must be a file of type: jpg",
                 },
             },
             submitHandler: function(form) {
@@ -54,12 +60,32 @@
 
         $("#editForm").validate({
             rules: {
+                dish: "required",
+                ingredients: "required",
+                menu_category_id: "required",
                 heading: "required",
                 point1: "required",
+                file: {
+                    extension: "jpg|jpeg"
+                },
+                cost: {
+                    required: true,
+                    number: true,
+                },
             },
             messages: {
+                dish: "Dish Name required",
+                ingredients: "Ingredients required",
+                menu_category_id: "Category required",
                 heading: "Heading required",
                 point1: "Point 1 required",
+                cost: {
+                    required: "Price required",
+                    number: "Price must be a number",
+                },
+                file: {
+                    extension: "File must be a file of type: jpg",
+                },
             },
             submitHandler: function(form) {
                 form.submit();
@@ -103,7 +129,7 @@
                 point2: "Point 2 required",
                 point3: "Point 3 required",
                 file: {
-                    extension: "File must be a file type: jpg",
+                    extension: "File must be a file of type: jpg",
                 },
             },
             submitHandler: function(form) {
@@ -139,7 +165,7 @@
             messages: {
                 heading: "Heading required",
                 file: {
-                    extension: "File must be a file type: jpg, png",
+                    extension: "File must be a file of type: jpg, png",
                 },
             },
             submitHandler: function(form) {
@@ -176,7 +202,7 @@
                 link: "Dish Name Required",
                 heading: "Heading required",
                 file: {
-                    extension: "File must be a file type: jpg, png",
+                    extension: "File must be a file of type: jpg, png",
                 },
             },
             submitHandler: function(form) {

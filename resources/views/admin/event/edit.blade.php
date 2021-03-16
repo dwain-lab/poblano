@@ -107,9 +107,7 @@
                     <strong>{!! Form::label('point2', '*Point 2') !!}</strong>
                     {!! Form::text('point2', $event->point2, [
                     'placeholder' => 'Enter a point',
-                    'class' =>
-                    'form-control
-                    ' . ($errors->has('point2') ? ' is-invalid' : null),
+                    'class' => 'form-control ' . ($errors->has('point2') ? ' is-invalid' : null),
                     'spellcheck' => 'true',
                     $errors->has('point2') ? 'autofocus' : null,
                     ]) !!}
